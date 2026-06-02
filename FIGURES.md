@@ -50,12 +50,13 @@ Stribeck friction + backlash + encoder noise)*
 ---
 
 ## 30-second pitch
-> I re-implemented the ACIN path-ILC faithfully on a real KUKA iiwa14 whose
+> I re-implemented the path-ILC faithfully on a real KUKA iiwa14 whose
 > joints I modelled as torsional spring-mass-dampers with realistic drivetrain
 > error (transmission error, friction, backlash, thermal drift, encoder noise).
 > Then I went past the paper on its own stated open problems: **(1)** self-learn
 > the drivetrain error from an **integrated joint-side (output) encoder** — the
-> sensor the PhD call names — instead of a laser tracker (`p2` validates it's a
+> secondary encoder real high-accuracy arms carry — instead of a laser tracker
+> (`p2` validates it's a
 > faithful proxy for true TCP accuracy; this is a stronger sensor than the
 > paper's motor-encoder-only robot, and I say so); **(2)** a learned model
 > **generalizes the

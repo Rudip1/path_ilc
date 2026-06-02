@@ -1,7 +1,7 @@
 """
 The AI layer: learn to predict an ILC correction table from path geometry.
 
-Motivation (the PhD's third goal, and the paper's open question):
+Motivation (the third goal, and the paper's open question):
   Classical ILC must run several trials on EACH new path. In production the
   part shifts slightly trial-to-trial, so the path is never quite the same,
   and re-running trials each time is costly. We ask: can a model look at a
@@ -18,10 +18,11 @@ How it stays honest:
   - The honest framing in the README: this shows the *architecture* (learned
     layer on top of classical ILC, exactly like a context-adaptive policy on
     top of a classical planner). On a 3-DOF sim with smooth paths the mapping
-    is easy; the real 6-DOF, load/temperature-dependent problem is the PhD.
+    is easy; the real 6-DOF, load/temperature-dependent problem is the open
+    research question.
 
-This mirrors the applicant's MSc work (a learned context-adaptive layer on
-top of a classical MPPI planner): same shape, different domain.
+This mirrors a context-adaptive learning layer on top of a classical MPPI
+planner: same shape, different domain.
 """
 
 import numpy as np

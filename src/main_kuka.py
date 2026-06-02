@@ -1,5 +1,5 @@
 """
-The four PhD experiments on the FLEXIBLE-JOINT KUKA iiwa14.
+The four experiments on the FLEXIBLE-JOINT KUKA iiwa14.
 
     python src/main_kuka.py
 

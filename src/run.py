@@ -1,5 +1,5 @@
 """
-Trial execution and the experiments for the three PhD goals.
+Trial execution and the experiments for the three goals.
 
 A "trial" = drive the arm once along a Cartesian path. At each path parameter
 lambda in [0,1] the controller:

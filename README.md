@@ -1,12 +1,12 @@
 # Path-ILC + a learned correction-transfer layer (MuJoCo demo)
 
-A small, fully runnable study of the control idea behind the **ACIN / TU Wien**
-PhD project *"AI-Enhanced High-Accuracy Robotics for Industrial Applications."*
-It re-implements the **path-parameter iterative learning controller (ILC)** of
-Schwegel & Kugi (ICRA 2024) on a simulated robot, then prototypes the project's
-stated open problems: generalizing a learned correction to **new paths**,
-handling **contact** tasks, and putting an **AI layer on top of the classical
-ILC** for effects a fixed table can't capture (e.g. thermal drift).
+A small, fully runnable study of a control idea for high-accuracy industrial
+robotics. It re-implements the **path-parameter iterative learning controller
+(ILC)** of Schwegel & Kugi (ICRA 2024) on a simulated robot, then prototypes
+three open problems the paper itself lists as future work: generalizing a
+learned correction to **new paths**, handling **contact** tasks, and putting an
+**AI layer on top of the classical ILC** for effects a fixed table can't
+capture (e.g. thermal drift).
 
 > This is a **conceptual demonstrator**, not a finished solution. The
 > [sensing assumption](#the-sensing-assumption-read-this-first) and
@@ -20,8 +20,6 @@ ILC** for effects a fixed table can't capture (e.g. thermal drift).
 - *A Path/Surface-Following Control Approach to Generate Virtual Fixtures* —
   background on path-indexed control
   ([PDF](papers/A_Path_Surface_Following_Control_Approach_to_Generate_Virtual_Fixtures.pdf)).
-- **PhD position description** — the three project goals this repo targets
-  ([PDF](papers/PhD_Position_Industrial-Robotics_AI-Enhanced-High-Accuracy-Robotics-for-Industrial-Applications.pdf)).
 
 ---
 
@@ -50,14 +48,15 @@ in trial by trial.
 
 ## What this is, in one minute
 
-Re-implement the ACIN path-ILC faithfully on a **real KUKA iiwa14** whose joints
+Re-implement the path-ILC faithfully on a **real KUKA iiwa14** whose joints
 are modelled as torsional **spring–mass–dampers** with realistic drivetrain
 error (transmission error, Stribeck friction, backlash, thermal drift, encoder
 noise). Then go past the paper on its own stated open problems:
 
 1. **Self-learn the drivetrain error from an integrated joint-side (output)
-   encoder** — the sensor the PhD call names — instead of an external laser
-   tracker. `p2` validates the encoder is a faithful proxy for true TCP accuracy.
+   encoder** — the secondary encoder real high-accuracy arms carry — instead of
+   an external laser tracker. `p2` validates the encoder is a faithful proxy for
+   true TCP accuracy.
    (See the [sensing assumption](#the-sensing-assumption-read-this-first) — this
    is a *different, easier* sensing setup than the paper's motor-encoder-only
    robot, and I'm explicit about that.)
@@ -85,10 +84,10 @@ encoder reading = motor angle + elastic deflection = true link angle
 ```
 
 That sensor **directly observes the drivetrain error**, which is exactly why the
-ILC can learn it without a tracker. This is a **legitimate** setup — the PhD call
-explicitly asks for accuracy *"without external measurement systems"* using
-*"integrated joint-side encoders"*, and real high-accuracy robots carry secondary
-output encoders — **but it is a stronger sensing assumption than the paper's
+ILC can learn it without a tracker. This is a **legitimate** setup — reaching
+absolute accuracy without external measurement systems is a real goal in
+high-accuracy robotics, and real arms carry secondary (output) encoders for
+exactly this — **but it is a stronger sensing assumption than the paper's
 robot**, which only had motor encoders. The laser tracker (true TCP) is read for
 **evaluation only**, never fed to the ILC.
 
@@ -158,7 +157,7 @@ learned feed-forward reproducing the true drivetrain-error pattern.
 
 ### 3. AI layer — generalize to an unseen path, zero trials (`k4`)
 
-*The paper's "generalize to different paths" open problem, and the PhD's Goal 2.*
+*The paper's "generalize to different paths" open problem (Goal 2).*
 A small network is trained on ILC-converged tables for a range of path shapes,
 then predicts a correction for a path it has **never seen**, with **zero trials**:
 **no-corr 35 mm → naive 5.7 mm → AI-predicted 1.46 mm**. The learned layer
@@ -169,7 +168,8 @@ trials on the new path.
 
 ### 4. Thermal drift defeats a frozen table → needs an AI layer (`r4`, `r5`)
 
-*The motivation for "AI on top of ILC" — the PhD's Goal 3.* Thermal drift is
+*The motivation for "AI on top of ILC" — the paper's "model-based learning
+filter" open problem (Goal 3).* Thermal drift is
 **non-repetitive**: a frozen ILC table degrades as the robot warms (`r4`), while
 an online ILC tracks it. Then a **temperature-aware model** predicts the
 compensation at an **unseen** thermal state with zero trials: **frozen 4.5 mm →
@@ -205,11 +205,11 @@ discontinuous friction flip.
 
 | Experiment | Result (Cartesian RMS at TCP) |
 |---|---|
-| **1. Convergence** (output encoder only) | 33965 → 1054 µm (**~32×**) |
-| **2. Speed transfer** | best at trained speed (≈990 µm); partial elsewhere |
+| **1. Convergence** (output encoder only) | 34156 → 1061 µm (**~32×**) |
+| **2. Speed transfer** | best at trained speed (≈997 µm); partial elsewhere |
 | **3. Path transfer** | no-corr 42016 → naive 14111 → relearn 1663 µm |
 | **4. AI, unseen path, 0 trials** | no-corr 34594 → naive 5736 → **AI 1461 µm** |
-| **5. Contact task** | ≈18000 → ≈1054 µm (**~17×**) under ~108 N press |
+| **5. Contact task** | 18065 → 1055 µm (**~17×**) under ~108 N press |
 
 Numbers vary slightly run-to-run (ML + physics); reproducible on a fixed machine
 with the pinned versions in `requirements.txt`.
@@ -394,7 +394,7 @@ python src/view.py                 # toy arm → outputs/arm_tracking.gif
 | `src/dashboard_kuka.py`, `src/dashboard_thermal.py` | real-time dashboard MP4s |
 | `src/arm.py`, `src/run.py`, `src/main.py`, `src/view.py` | the toy 3-DOF demonstrator |
 | `src/run_all.py` | regenerate every result in one command (`--quick` skips videos) |
-| `papers/` | the reference papers + PhD position description |
+| `papers/` | the reference papers |
 | `FIGURES.md` | figure index / talking-points sheet (claim + number per figure) |
 
 `MuJoCo_tutorials-main/` is a third-party MuJoCo tutorial kept only as a learning

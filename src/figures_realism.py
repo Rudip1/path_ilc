@@ -253,7 +253,7 @@ def fig_thermal_ai():
     ax[1].set_ylabel("joint-2 correction [mrad]")
     ax[1].set_title("Predicted vs required correction"); ax[1].legend(fontsize=8)
     fig.suptitle("Temperature-aware AI layer predicts the thermal-drift "
-                 "compensation (the PhD's 'AI on top of ILC')", fontsize=12.5)
+                 "compensation (AI on top of ILC)", fontsize=12.5)
     fig.tight_layout(rect=[0, 0, 1, 0.93])
     fig.savefig(os.path.join(OUT, "r5_thermal_ai.png")); plt.close(fig)
 

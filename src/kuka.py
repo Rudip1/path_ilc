@@ -1,12 +1,13 @@
 """
 Flexible-joint KUKA iiwa14 plant, built from the MuJoCo Menagerie model.
 
-Why this is the faithful version of the PhD problem
----------------------------------------------------
-The PhD call asks for sub-10 um accuracy "without external measurement
-systems", using "integrated joint-side encoders", by self-learning the
-"drivetrain errors" of "cycloidal drive modules". The dominant such error is
-JOINT ELASTICITY / TRANSMISSION ERROR: the motor turns by theta_m, but the
+Why this is the faithful version of the problem
+-----------------------------------------------
+High-accuracy industrial robotics targets sub-10 um absolute accuracy without
+external measurement systems, using integrated joint-side encoders, by
+self-learning the drivetrain errors of geared (e.g. cycloidal) drive modules.
+The dominant such error is JOINT ELASTICITY / TRANSMISSION ERROR: the motor
+turns by theta_m, but the
 link actually arrives at a slightly different angle theta_l because the gear
 train is not perfectly stiff and deflects under load (gravity, acceleration).
 
@@ -29,9 +30,9 @@ two-mass flexible joint:
 IMPORTANT sensing caveat (see README "The sensing assumption"):
   The paper needs a laser tracker precisely because MOTOR-side encoders cannot
   observe the link dynamics. Here we instead assume a JOINT-SIDE / SECONDARY /
-  OUTPUT encoder that *directly* sees the true link angle -- exactly the
-  "integrated joint-side encoder" the PhD call names, and a real sensor on
-  high-accuracy robots, but a STRONGER sensing assumption than the paper's
+  OUTPUT encoder that *directly* sees the true link angle -- an integrated
+  joint-side encoder, a real sensor on high-accuracy robots, but a STRONGER
+  sensing assumption than the paper's
   motor-encoder-only robot. That is what makes learning-without-a-tracker
   possible here; it is not the paper's harder motor-encoder-only problem.
 
