@@ -43,11 +43,9 @@ arm, the TCP error vs path parameter λ (past trials fading as it collapses), th
 seven ILC feed-forward signals being applied, and the convergence curve filling
 in trial by trial.
 
-<video src="outputs/kuka_dashboard.mp4" controls width="100%"></video>
+![KUKA mission-control dashboard](outputs/kuka_dashboard.gif)
 
-> ▶️ [`outputs/kuka_dashboard.mp4`](outputs/kuka_dashboard.mp4) — GitHub renders
-> the `<video>` tag inline once the repo is pushed; locally, open the file
-> directly.
+> Higher-quality MP4: [`outputs/kuka_dashboard.mp4`](outputs/kuka_dashboard.mp4).
 
 ---
 
@@ -280,9 +278,9 @@ state, zero trials: **frozen 4.5 mm → AI 0.99 mm ≈ oracle 1.05 mm**.
 
 Frozen vs online RMS diverging live as joint temperature rises.
 
-<video src="outputs/kuka_thermal_dashboard.mp4" controls width="100%"></video>
+![Thermal warm-up dashboard](outputs/kuka_thermal_dashboard.gif)
 
-See [`outputs/kuka_thermal_dashboard.mp4`](outputs/kuka_thermal_dashboard.mp4).
+> Higher-quality MP4: [`outputs/kuka_thermal_dashboard.mp4`](outputs/kuka_thermal_dashboard.mp4).
 
 ---
 
