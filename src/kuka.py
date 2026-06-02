@@ -21,10 +21,19 @@ two-mass flexible joint:
   * The PLANT (build_flexible_model) has the springs, so under gravity/motion
     the link lags the motor by an unknown, pose- and load-dependent amount.
   * The motor-side encoder reads theta_m (what the controller assumes); the
-    JOINT-SIDE encoder reads theta_l (the truth at the link). Their difference
-    is the transmission error the ILC must learn -- from joint-side encoders
-    only, with NO laser tracker. The true Cartesian TCP is read for evaluation
-    only.
+    JOINT-SIDE / OUTPUT encoder reads the true link angle
+    theta_l = theta_m + deflection (read_joint_encoders). The ILC learns the
+    drivetrain error from that joint-side encoder; the true Cartesian TCP
+    (read_tcp) is read for EVALUATION ONLY, never fed to the ILC.
+
+IMPORTANT sensing caveat (see README "The sensing assumption"):
+  The paper needs a laser tracker precisely because MOTOR-side encoders cannot
+  observe the link dynamics. Here we instead assume a JOINT-SIDE / SECONDARY /
+  OUTPUT encoder that *directly* sees the true link angle -- exactly the
+  "integrated joint-side encoder" the PhD call names, and a real sensor on
+  high-accuracy robots, but a STRONGER sensing assumption than the paper's
+  motor-encoder-only robot. That is what makes learning-without-a-tracker
+  possible here; it is not the paper's harder motor-encoder-only problem.
 
 Everything (meshes, link masses, inertias, kinematics) comes from the real
 Menagerie model; we only add the drivetrain compliance + friction that a real

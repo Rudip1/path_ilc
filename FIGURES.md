@@ -14,7 +14,7 @@ Stribeck friction + backlash + encoder noise)*
 
 | File | Claim it proves | Key numbers |
 |---|---|---|
-| `k1_convergence.png` | **Goal 1 — learn without a laser tracker.** ILC converges using joint-side encoders only. | 34 mm → ~1.06 mm RMS, **~32×**, most in 2–3 trials |
+| `k1_convergence.png` | **Goal 1 — self-learn the drivetrain error from a joint-side (output) encoder**, no laser tracker. *(Stronger sensor than the paper's motor-encoder-only robot — see README "sensing assumption".)* | 34 mm → ~1.06 mm RMS, **~32×**, most in 2–3 trials |
 | `k2_speed.png` | Path-λ indexing transfers across speeds (honest: partial — velocity-dependent residual). | best at trained speed ≈ 0.99 mm |
 | `k3_transfer.png` | **The open problem.** A table learned on path A barely helps on path B; full relearn works but costs trials. | no-corr 42 mm → naive 14 mm → relearn 1.66 mm |
 | `k4_ai_transfer.png` | **Goal 2 — generalize to a new path.** AI predicts a correction for an **unseen** path, **zero trials**. | no-corr 35 mm → naive 5.7 mm → **AI 1.46 mm** |
@@ -25,7 +25,7 @@ Stribeck friction + backlash + encoder noise)*
 | File | Claim it proves | Key numbers |
 |---|---|---|
 | `p1_paper_style.png` | Faithful reproduction of the paper's Fig. 5 (error / ILC input / path speed); ILC-OFF at trial 5 returns the error, ON at trial 6 removes it. | error ±40 mm → ~1 mm |
-| `p2_validation.png` | **Answer to "is it circular?"** Encoder-side RMS and true TCP RMS fall in lock-step ⇒ minimizing what the encoders see minimizes true accuracy ⇒ **no tracker needed**. Learned feedforward matches the true drivetrain error. | corr ≈ 0.97 |
+| `p2_validation.png` | **Answer to "is it circular?"** Joint-side output-encoder RMS and true TCP RMS fall in lock-step ⇒ minimizing what the encoder sees minimizes true accuracy ⇒ **no tracker needed to learn** (only to confirm this correlation once). Learned feedforward matches the true drivetrain error. | corr ≈ 0.97 |
 | `p3_error_vs_path.png` | Where the error lives along the path, before vs after learning. | trial-0 vs converged |
 | `p4_vibration.png` | **Mechanical view** — each joint is a torsional spring-mass-damper; natural frequencies vs the 5 Hz Q-filter cutoff; structural mode vs damped reality. | f_n ≈ 10–195 Hz |
 
@@ -53,9 +53,12 @@ Stribeck friction + backlash + encoder noise)*
 > I re-implemented the ACIN path-ILC faithfully on a real KUKA iiwa14 whose
 > joints I modelled as torsional spring-mass-dampers with realistic drivetrain
 > error (transmission error, friction, backlash, thermal drift, encoder noise).
-> Then I went past the paper on its own stated open problems: **(1)** learn the
-> correction from **joint-side encoders only — no laser tracker** (`p2` validates
-> the encoders are a faithful proxy); **(2)** a learned model **generalizes the
+> Then I went past the paper on its own stated open problems: **(1)** self-learn
+> the drivetrain error from an **integrated joint-side (output) encoder** — the
+> sensor the PhD call names — instead of a laser tracker (`p2` validates it's a
+> faithful proxy for true TCP accuracy; this is a stronger sensor than the
+> paper's motor-encoder-only robot, and I say so); **(2)** a learned model
+> **generalizes the
 > correction to an unseen path with zero trials** (`k4`); **(3)** a
 > **temperature-aware AI layer** predicts the **thermal-drift** compensation that
 > a fixed ILC table can't (`r4`, `r5`) — the "AI-enhanced" part. It's simulation,
