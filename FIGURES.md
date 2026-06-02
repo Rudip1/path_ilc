@@ -18,7 +18,7 @@ Stribeck friction + backlash + encoder noise)*
 | `k2_speed.png` | Path-λ indexing transfers across speeds (honest: partial — velocity-dependent residual). | best at trained speed ≈ 0.99 mm |
 | `k3_transfer.png` | **The open problem.** A table learned on path A barely helps on path B; full relearn works but costs trials. | no-corr 42 mm → naive 14 mm → relearn 1.66 mm |
 | `k4_ai_transfer.png` | **Goal 2 — generalize to a new path.** AI predicts a correction for an **unseen** path, **zero trials**. | no-corr 35 mm → naive 5.7 mm → **AI 1.46 mm** |
-| `k5_contact.png` | **Paper's open problem — contact tasks.** ILC on a tool pressed on a worktable. | 18 mm → 1.06 mm, **~17×**, ~110 N press |
+| `k5_contact.png` | **Paper's open problem — contact tasks.** ILC on a tool pressed on a worktable. | 18 mm → 1.06 mm, **~17×**, ~108 N press |
 
 ## Analysis figures (control-research style)
 

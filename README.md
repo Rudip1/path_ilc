@@ -192,7 +192,7 @@ rises):
 python src/main_kuka_contact.py
 ```
 
-The tool tip is dragged along a circle while **pressing on a worktable (~110 N**,
+The tool tip is dragged along a circle while **pressing on a worktable (~108 N**,
 from gravity on the flexible arm). Sliding friction + joint elasticity create a
 repeatable in-plane disturbance, and the **same** path-ILC learns to cancel it:
 **18 mm → 1.06 mm RMS (~17×)**. The max error plateaus ~9 mm at the friction
@@ -207,9 +207,9 @@ discontinuous friction flip.
 |---|---|
 | **1. Convergence** (output encoder only) | 33965 → 1054 µm (**~32×**) |
 | **2. Speed transfer** | best at trained speed (≈990 µm); partial elsewhere |
-| **3. Path transfer** | no-corr 41865 → naive 14006 → relearn 1651 µm |
-| **4. AI, unseen path, 0 trials** | no-corr 34401 → naive 5421 → **AI 1556 µm** |
-| **5. Contact task** | 17586 → 1060 µm (**~17×**) under ~110 N press |
+| **3. Path transfer** | no-corr 42016 → naive 14111 → relearn 1663 µm |
+| **4. AI, unseen path, 0 trials** | no-corr 34594 → naive 5736 → **AI 1461 µm** |
+| **5. Contact task** | ≈18000 → ≈1054 µm (**~17×**) under ~108 N press |
 
 Numbers vary slightly run-to-run (ML + physics); reproducible on a fixed machine
 with the pinned versions in `requirements.txt`.
